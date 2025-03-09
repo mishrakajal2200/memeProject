@@ -3,11 +3,11 @@
 MemeVerse is an interactive meme platform where users can explore, upload, and engage with memes. It includes infinite scrolling, meme categories, AI-generated captions, and dark mode!
 
 ## 🚀 Live Demo
-🔗 [MemeVerse](https://your-deployed-link.vercel.app)
+🔗 [MemeVerse](https://endearing-seahorse-a3acf0.netlify.app)
 
 ## 📸 Screenshots
-![Home Page](./screenshots/home.png)
-![Meme Upload](./screenshots/upload.png)
+![Home Page](C:\Users\Lenovo\Desktop\homePage.png)
+![Meme Upload](C:\Users\Lenovo\Desktop\upload.png)
 
 ## 🎯 Features
 ✅ Trending memes (Fetched from API)  
@@ -30,5 +30,5 @@ MemeVerse is an interactive meme platform where users can explore, upload, and e
 ## ⚡ Installation
 1. Clone the repo:
    ```sh
-   git clone https://github.com/yourusername/MemeVerse.git
+   git clone https://github.com/mishrakajal2200/memeProject.git
    cd MemeVerse
