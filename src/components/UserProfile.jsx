@@ -48,19 +48,18 @@ const UserProfile = () => {
   };
 
   return (
-    <div className="min-h-screen flex flex-col items-center justify-center bg-gradient-to-r from-black via-gray-900 to-black text-white px-4">
-      <h2 className="text-4xl font-bold text-purple-400 mb-6">👾 Cyber Profile 👾</h2>
+    <div className="min-h-screen flex flex-col items-center justify-center bg-gradient-to-r from-black via-gray-900 to-black text-white px-4 sm:px-6 md:px-8">
+      <h2 className="text-3xl sm:text-4xl font-bold text-purple-400 mb-6 text-center">👾 Cyber Profile 👾</h2>
 
-      {/* Profile Card with Animation */}
       <motion.div
-        className="relative p-6 rounded-2xl w-full max-w-md shadow-2xl bg-gray-800 border border-purple-500 text-center"
+        className="relative p-4 sm:p-6 rounded-2xl w-full max-w-xs sm:max-w-md shadow-2xl bg-gray-800 border border-purple-500 text-center"
         whileHover={{ scale: 1.03, rotateX: 3, rotateY: -3 }}
       >
         <label className="cursor-pointer block relative mx-auto">
           <img
             src={user.profilePic}
             alt="Profile"
-            className="w-32 h-32 rounded-full mx-auto mb-4 border-4 border-purple-500 shadow-lg transition-all hover:scale-110"
+            className="w-24 sm:w-32 h-24 sm:h-32 rounded-full mx-auto mb-4 border-4 border-purple-500 shadow-lg transition-all hover:scale-110"
           />
           <input type="file" accept="image/*" onChange={handleProfilePicChange} className="hidden" />
         </label>
@@ -72,36 +71,35 @@ const UserProfile = () => {
               name="name"
               value={user.name}
               onChange={handleProfileChange}
-              className="w-full p-2 bg-gray-900 text-white rounded border border-purple-500 focus:ring-2 focus:ring-purple-500"
+              className="w-full p-2 bg-gray-900 text-white rounded border border-purple-500 focus:ring-2 focus:ring-purple-500 text-sm sm:text-base"
             />
             <textarea
               name="bio"
               value={user.bio}
               onChange={handleProfileChange}
-              className="w-full p-2 mt-2 bg-gray-900 text-white rounded border border-purple-500 focus:ring-2 focus:ring-purple-500"
+              className="w-full p-2 mt-2 bg-gray-900 text-white rounded border border-purple-500 focus:ring-2 focus:ring-purple-500 text-sm sm:text-base"
             ></textarea>
-            <button onClick={handleSaveProfile} className="mt-4 bg-purple-500 hover:bg-purple-700 text-white font-bold py-2 px-4 rounded">
+            <button onClick={handleSaveProfile} className="mt-4 bg-purple-500 hover:bg-purple-700 text-white font-bold py-2 px-4 rounded text-sm sm:text-base">
               Save Profile
             </button>
           </>
         ) : (
           <>
-            <h3 className="text-2xl font-bold">{user.name}</h3>
-            <p className="text-gray-300">{user.bio}</p>
-            <button onClick={handleEditProfile} className="mt-4 bg-purple-500 hover:bg-purple-700 text-white font-bold py-2 px-4 rounded">
+            <h3 className="text-xl sm:text-2xl font-bold">{user.name}</h3>
+            <p className="text-gray-300 text-sm sm:text-base">{user.bio}</p>
+            <button onClick={handleEditProfile} className="mt-4 bg-purple-500 hover:bg-purple-700 text-white font-bold py-2 px-4 rounded text-sm sm:text-base">
               Edit Profile
             </button>
           </>
         )}
       </motion.div>
 
-      {/* Uploaded Memes */}
-      <div className="mt-10 w-full max-w-lg">
-        <h3 className="text-3xl font-bold text-purple-400 text-center mb-4">🔥 Uploaded Memes 🔥</h3>
+      <div className="mt-8 w-full max-w-xs sm:max-w-lg">
+        <h3 className="text-2xl sm:text-3xl font-bold text-purple-400 text-center mb-4">🔥 Uploaded Memes 🔥</h3>
         {uploadedMemes.length === 0 ? (
-          <p className="text-gray-400 text-center">No memes uploaded yet.</p>
+          <p className="text-gray-400 text-center text-sm sm:text-base">No memes uploaded yet.</p>
         ) : (
-          <div className="grid grid-cols-2 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             {uploadedMemes.map((meme, index) => (
               <motion.div
                 key={index}
@@ -115,13 +113,12 @@ const UserProfile = () => {
         )}
       </div>
 
-      {/* Liked Memes */}
-      <div className="mt-8 w-full max-w-lg">
-        <h3 className="text-3xl font-bold text-purple-400 text-center mb-4">💜 Liked Memes ({likedMemes.length}) 💜</h3>
+      <div className="mt-8 w-full max-w-xs sm:max-w-lg">
+        <h3 className="text-2xl sm:text-3xl font-bold text-purple-400 text-center mb-4">💜 Liked Memes ({likedMemes.length}) 💜</h3>
         {likedMemes.length === 0 ? (
-          <p className="text-gray-400 text-center">No liked memes yet.</p>
+          <p className="text-gray-400 text-center text-sm sm:text-base">No liked memes yet.</p>
         ) : (
-          <div className="grid grid-cols-2 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             {likedMemes.map((meme, index) => (
               <motion.div
                 key={index}

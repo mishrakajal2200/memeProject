@@ -2,7 +2,7 @@
 import React, { useState, useCallback } from "react";
 import axios from "axios";
 import { motion } from "framer-motion";
-import CaptionEditor from "./CaptionEditor"; // Assuming you have a CaptionEditor component for editing captions
+import CaptionEditor from "./CaptionEditor"; 
 
 const UploadForm = () => {
   const [file, setFile] = useState(null);
@@ -12,10 +12,9 @@ const UploadForm = () => {
   const [generatedCaption, setGeneratedCaption] = useState("");
   const [templates, setTemplates] = useState(null);
 
-  const username = "KajalMishra1"; // Your Imgflip credentials
+  const username = "KajalMishra1";  
   const password = "ammukaju123A@mishra";
 
-  // Fetch meme templates on mount and cache them
   const fetchMemes = useCallback(async () => {
     if (!templates) {
       try {
@@ -27,41 +26,34 @@ const UploadForm = () => {
     }
   }, [templates]);
 
-  // Handle file input
   const handleFileChange = useCallback((e) => {
     const selectedFile = e.target.files[0];
     setFile(selectedFile);
     previewImage(selectedFile);
   }, []);
 
-  // Image preview
   const previewImage = (file) => {
     const reader = new FileReader();
-    reader.onloadend = () => {
-      setImageURL(reader.result);
-    };
+    reader.onloadend = () => setImageURL(reader.result);
     if (file) reader.readAsDataURL(file);
   };
 
-  // Generate meme using Imgflip API
   const generateMeme = async () => {
     setLoading(true);
     try {
       await fetchMemes();
-
       if (!templates?.length) {
         console.error("No meme templates found!");
         return;
       }
 
       const randomMeme = templates[Math.floor(Math.random() * templates.length)];
-
       const captionResponse = await axios.post(
         "https://api.imgflip.com/caption_image",
         new URLSearchParams({
           template_id: randomMeme.id,
-          username: username,
-          password: password,
+          username,
+          password,
           text0: "When you realize...",
           text1: "You forgot to submit the assignment!",
         })
@@ -80,14 +72,12 @@ const UploadForm = () => {
     }
   };
 
-  // Upload meme to Cloudinary (for both file and generated meme)
   const handleUpload = async () => {
     setLoading(true);
     try {
-      let uploadFile = file; // Default to selected file
+      let uploadFile = file;
       let uploadURL = imageURL;
 
-      // If generated meme exists, use it
       if (imageURL && !file) {
         const response = await fetch(uploadURL);
         const blob = await response.blob();
@@ -99,19 +89,17 @@ const UploadForm = () => {
         return;
       }
 
-      // Form data for Cloudinary upload
       const formData = new FormData();
       formData.append("file", uploadFile);
-      formData.append("upload_preset", "memverse"); // Cloudinary preset
+      formData.append("upload_preset", "memverse"); 
 
       const uploadResponse = await axios.post(
-        "https://api.cloudinary.com/v1_1/kajalmishra/image/upload", // Replace with your Cloudinary URL
+        "https://api.cloudinary.com/v1_1/kajalmishra/image/upload", 
         formData
       );
 
       const uploadedImageURL = uploadResponse.data.secure_url;
 
-      // Meme object
       const newMeme = {
         id: Date.now().toString(),
         title: caption || generatedCaption,
@@ -120,7 +108,6 @@ const UploadForm = () => {
         comments: [],
       };
 
-      // Save meme to localStorage
       const storedMemes = JSON.parse(localStorage.getItem("memes")) || [];
       storedMemes.push(newMeme);
       localStorage.setItem("memes", JSON.stringify(storedMemes));
@@ -134,9 +121,9 @@ const UploadForm = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-r from-blue-500 via-indigo-600 to-purple-700 flex items-center justify-center">
-      <div className="bg-white dark:bg-gray-900 p-8 rounded-lg shadow-lg max-w-md w-full">
-        <h2 className="text-3xl font-semibold text-center text-gray-800 dark:text-white mb-6">
+    <div className="min-h-screen bg-gradient-to-r from-blue-500 via-indigo-600 to-purple-700 flex items-center justify-center px-4">
+      <div className="bg-white dark:bg-gray-900 p-6 sm:p-8 rounded-lg shadow-lg max-w-sm sm:max-w-md w-full overflow-hidden">
+        <h2 className="text-2xl sm:text-3xl font-semibold text-center text-gray-800 dark:text-white mb-4">
           Upload Your Meme
         </h2>
 
@@ -145,12 +132,12 @@ const UploadForm = () => {
           type="file"
           accept="image/*, .gif"
           onChange={handleFileChange}
-          className="block w-full py-2 px-4 text-sm text-gray-700 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent mb-4"
+          className="block w-full py-2 px-3 text-sm text-gray-700 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 mb-4"
         />
 
         {/* Image Preview */}
         {imageURL && (
-          <div className="mt-4 mb-6">
+          <div className="mt-4 mb-4">
             <img
               src={imageURL}
               alt="Meme Preview"
@@ -163,21 +150,21 @@ const UploadForm = () => {
         <CaptionEditor caption={caption} setCaption={setCaption} />
 
         {/* Action Buttons */}
-        <div className="space-x-4 mt-4 text-center">
+        <div className="flex flex-col sm:flex-row items-center justify-center gap-3 mt-4">
           <motion.button
             onClick={generateMeme}
-            className="bg-blue-600 text-white py-2 px-6 rounded-md shadow-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className="bg-blue-600 text-white py-2 px-5 sm:px-6 rounded-md shadow-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 w-full sm:w-auto"
             disabled={loading}
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 0.5 }}
           >
-            {loading ? "Generating Meme..." : "Generate Meme"}
+            {loading ? "Generating..." : "Generate Meme"}
           </motion.button>
 
           <motion.button
             onClick={handleUpload}
-            className="bg-green-600 text-white py-2 px-6 rounded-md shadow-md hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500"
+            className="bg-green-600 text-white py-2 px-5 sm:px-6 rounded-md shadow-md hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2 w-full sm:w-auto"
             disabled={loading}
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
@@ -190,7 +177,7 @@ const UploadForm = () => {
         {/* Loading Spinner */}
         {loading && (
           <div className="flex justify-center items-center mt-6">
-            <div className="w-10 h-10 border-t-4 border-blue-600 border-solid rounded-full animate-spin"></div>
+            <div className="w-8 h-8 sm:w-10 sm:h-10 border-t-4 border-blue-600 border-solid rounded-full animate-spin"></div>
           </div>
         )}
       </div>

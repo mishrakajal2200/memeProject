@@ -1,5 +1,4 @@
 
-
 import React, { useEffect, useCallback } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchMemes, setSearch, setCategory, setSortBy, nextPage } from "../redux/memeSlice";
@@ -46,31 +45,27 @@ const Explore = () => {
   return (
     <div className="max-w-4xl mx-auto p-4">
       {/* Filters & Search */}
-      <div className="flex justify-between items-center mb-4">
+      <div className="flex flex-col sm:flex-row gap-2 sm:gap-4 mb-4">
         <input
           type="text"
           placeholder="Search memes..."
-          className="p-2 border rounded w-1/2"
+          className="p-2 border rounded w-full sm:w-1/3 text-sm"
           onChange={(e) => handleSearch(e.target.value)}
         />
-        <select className="p-2 border rounded" onChange={(e) => dispatch(setCategory(e.target.value))}>
+        <select className="p-2 border rounded w-full sm:w-1/4 text-sm" onChange={(e) => dispatch(setCategory(e.target.value))}>
           {["Trending", "New", "Classic", "Random"].map((cat) => (
-            <option key={cat} value={cat}>
-              {cat}
-            </option>
+            <option key={cat} value={cat}>{cat}</option>
           ))}
         </select>
-        <select className="p-2 border rounded" onChange={(e) => dispatch(setSortBy(e.target.value))}>
+        <select className="p-2 border rounded w-full sm:w-1/4 text-sm" onChange={(e) => dispatch(setSortBy(e.target.value))}>
           {["likes", "date", "comments"].map((sort) => (
-            <option key={sort} value={sort}>
-              {sort}
-            </option>
+            <option key={sort} value={sort}>{sort}</option>
           ))}
         </select>
       </div>
 
       {/* Meme List */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
         {memes.map((meme) => (
           <Link key={meme.id} to={`/meme/${meme.id}`}>
             <MemeCard meme={meme} />
@@ -92,4 +87,3 @@ const Explore = () => {
 };
 
 export default Explore;
-
